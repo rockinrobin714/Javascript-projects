@@ -35,7 +35,6 @@ var choose = function(){
 		} else if (answer ==='O' || answer === 'o'){
 			console.log("You are O!")
 			turn.letter = 'O';
-
 		} else {
 			console.log("Not sure what you were typing there. I will just make you X.")
 			turn.letter = 'X';
@@ -49,7 +48,15 @@ var play = function(){
 var playGame = function(){
 	ask(`${board}\n ${turn.current}, make your move. Type a number 1 - 9.`, function(answer){
 		if (parseInt(answer)!=answer)	{
-			console.log("That was not a number. Try again.")
+			console.log("\nThat was not a number. Try again.")
+			playGame();
+		} else if (!board.includes(answer)){
+			console.log("\nUh... that isn't a valid move. Try again.")
+			playGame();
+		} else {
+			var index = board.indexOf(answer);
+			board = board.substr(0, index) + turn.letter + board.substr(index + 1);
+			newTurn();
 			playGame();
 		}
 	})
