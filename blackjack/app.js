@@ -15,7 +15,7 @@ var Blackjack = function(){
     K: 10
     }
 
-  this.deck = this.createDeck();
+  this.deck = this.shuffleDeck(this.createDeck());
   this.hand = this.dealTwo();
 }
 Blackjack.prototype.createDeck = function(){
@@ -46,8 +46,18 @@ Blackjack.prototype.stay = function(){
   //do nothing
 }
 Blackjack.prototype.shuffleDeck = function(){
-  //shuffle deck randomly
+  let deckCopy = deck.slice();
+  let currentIndex = deckCopy.length-1;
+  while (currentIndex>=0){
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    let temp = deckCopy[randomIndex];
+    deckCopy[randomIndex]=deckCopy[currentIndex];
+    deckCopy[currentIndex]=temp;
+    currentIndex--
+  }
+ return deckCopy;
 }
+
 Blackjack.prototype.dealTwo = function(){
   var hand = []
   hand.push(this.hit());

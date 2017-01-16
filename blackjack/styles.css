@@ -1,4 +1,3 @@
-
 * {margin: 0; padding: 0;}
 
 body {
@@ -19,9 +18,8 @@ div[class*='suit']:after {
   bottom: 5px;
 }
 
-
 .hand {
-  margin: 50px;
+  margin: 20px;
 }
 
 /* For modern browsers */
