@@ -43,12 +43,16 @@ $('#erase-all').click(function(){
 })
 
 $('#equals').click(function(){
+	//computer can not evaluate x and ÷, change them for the calculation
 	currentString = currentString.replace("x", "*");
-	currentString = currentString.replace("x", "/");
+	currentString = currentString.replace("÷", "/");
 	total = eval(currentString);
 	$('#current-equation').html(total);
 	var digits = total.toString().length;
 	previousString = currentString + ' = ' + total;
+	//change back the characters for readability purposes
+	previousString = previousString.replace('/', '÷');
+	previousString = previousString.replace('*', 'x');
 	$('#past-equation').html(previousString.slice(-20));
 	currentString = total.toString();
 })
