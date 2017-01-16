@@ -1,7 +1,6 @@
 var currentString = '';
-var arr = [];
+var previousString = '';
 var total = null;
-var operators = ['x','-','+','÷'];
 
 $('.num').click(function(){
 	currentString += $(this).html().replace(/^\s+|\s+$|\s+(?=\s)/g, "");
@@ -15,9 +14,10 @@ $('.num').click(function(){
 
 $('#erase-one').click(function(){
 	//remove the last number from the string
-	//check if the last button was an operator
-	if (operators.indexOf(currentString[currentString.length-1])>-1){
-
+	//check if the last button was an operator and delete the space around if so
+	var operators = ['x', '+', '÷', '-']
+	if (operators.indexOf(currentString[currentString.length-2])>-1){
+		currentString = currentString.substr(0, currentString.length-3)
 	}else {
 		currentString = currentString.substr(0, currentString.length-1);
 	}
@@ -25,40 +25,30 @@ $('#erase-one').click(function(){
 	if (currentString===''){
 		currentString = '0';
 	}
-	//only show the last 10 numbers on the screen
+	//only show the last 11 numbers on the screen
   $('#current-equation').html(currentString.slice(-11));
 })
 
 $('.operator').click(function(){
 	currentString += ' ' + $(this).html().replace(/^\s+|\s+$|\s+(?=\s)/g, "")+ ' ';
-	//only show the last 10 numbers on the screen
+	//only show the last 11 numbers on the screen
   $('#current-equation').html(currentString.slice(-11));
 })
 
-//check phone to see how this works
 $('#erase-all').click(function(){
 	currentString = '';
+	previousString = '';
 	$('#current-equation').html('0');
+	$('#past-equation').html('0');
 })
 
-$('#erase-all').click(function(){
-	
+$('#equals').click(function(){
+	currentString = currentString.replace("x", "*");
+	currentString = currentString.replace("x", "/");
+	total = eval(currentString);
+	$('#current-equation').html(total);
+	var digits = total.toString().length;
+	previousString = currentString + ' = ' + total;
+	$('#past-equation').html(previousString.slice(-20));
+	currentString = total.toString();
 })
-
-
-var getAnswer = function(){
-	adjustNumbersForDecimal();
-	if (operator==="+"){
-		finalNumber=firstNumber + secondNumber;
-	}
-	else if (operator==="-"){
-		finalNumber=firstNumber - secondNumber;
-	}
-	else if (operator==="x"){
-		finalNumber=firstNumber * secondNumber;
-	}
-	else if (operator==="÷"){
-		finalNumber=firstNumber / secondNumber;
-	}
-}
-
