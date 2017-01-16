@@ -1,0 +1,79 @@
+#main-container {
+    width:260px;
+    height:505px;
+    border-style:solid;
+    font-size:18px;
+}
+.white-box {
+    float:left;
+    width:63px;
+    height:63px;
+    border: 1px solid #E1E2E3;
+    text-align:center;
+    line-height:60px;
+    color:#8F8F8F;
+    cursor:pointer;
+}
+
+.grey-box {
+    float:left;
+    width:63px;
+    height:63px;
+    background-color:#f0f0f5;
+    border: 1px solid #E1E2E3;
+    text-align:center;
+    line-height:60px;
+    color:#8F8F8F;
+    cursor:pointer;
+}
+
+.wide-box {
+    float:left;
+    width:128px;
+    height:63px;
+    border: 1px solid #E1E2E3;
+    text-align:center;
+    line-height:60px;
+    color:#8F8F8F;
+    cursor:pointer;
+}
+
+.orange-box {
+    float:right;
+    width:63px;
+    height:128px;
+    background-color:#ff8000;
+    border: 1px solid #E1E2E3;
+    color:white;
+    text-align:center;
+    line-height:200px;
+    cursor:pointer;
+}
+
+#top-screen {
+    background-color:#D7DADB;
+    height:180px;
+    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align:right;
+}
+
+#past-equation {
+    text-align:right;
+    font-size:22px;
+    padding-right:20px;
+    padding-top:80px;
+    color:#8F8F8F;
+}
+
+#current-equation {
+    text-align:right;
+    padding-right:20px;
+    padding-top:10px;
+    font-size:44px;
+    max-width:260px;
+}
+#erase-all {
+    color:#ff8000;
+}
