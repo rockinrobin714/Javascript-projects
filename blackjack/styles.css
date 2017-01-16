@@ -82,3 +82,8 @@ div[class*='suit']:after {
 	background-image: url('./cardback.png');
 	background-position: center;
 }
+button {
+	padding: 5px;
+	font-size: 18px;
+	border-radius: 20%;
+}

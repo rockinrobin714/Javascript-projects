@@ -16,18 +16,20 @@ var Blackjack = function(){
     }
 
   this.deck = this.shuffleDeck(this.createDeck());
-  this.hand = this.dealTwo();
+  this.playerHand = [];
+  this.dealerHand = [];
 }
 Blackjack.prototype.createDeck = function(){
   var deck = []
   for (var key in this.cardValues){
-    for (let i = 0;i<4;i++){
-    //not worrying about suits, just pushing into a deck
-    deck.push(key)
-    }
+    deck.push({number: key, suit: 'hearts'});
+    deck.push({number: key, suit: 'diamonds'});
+    deck.push({number: key, suit: 'clubs'});
+    deck.push({number: key, suit: 'clubs'});
   }
   return deck;
 }
+
 Blackjack.prototype.reveal = function(){
   let total = 0;
   for (var i = 0;i<this.hand.length;i++){
@@ -38,14 +40,18 @@ Blackjack.prototype.reveal = function(){
     }
   }
 }
-Blackjack.prototype.hit = function() {  
-  this.hand.push(this.deck[Math.round(this.deck.length*Math.random)])
+Blackjack.prototype.dealOneToPlayer = function() {  
+  this.playerHand.push(this.deck.shift())
+}
+
+Blackjack.prototype.dealOneToDealer = function() {  
+  this.dealerHand.push(this.deck.shift())
 }
 
 Blackjack.prototype.stay = function(){
   //do nothing
 }
-Blackjack.prototype.shuffleDeck = function(){
+Blackjack.prototype.shuffleDeck = function(deck){
   let deckCopy = deck.slice();
   let currentIndex = deckCopy.length-1;
   while (currentIndex>=0){
@@ -58,9 +64,16 @@ Blackjack.prototype.shuffleDeck = function(){
  return deckCopy;
 }
 
-Blackjack.prototype.dealTwo = function(){
-  var hand = []
-  hand.push(this.hit());
-  hand.push(this.hit());
-  return hand;
+Blackjack.prototype.firstDeal = function(){
+  this.dealOneToPlayer();
+  this.dealOneToDealer();
+  this.dealOneToPlayer();
+  this.dealOneToDealer();
+  console.log(this.playerHand);
+  console.log(this.deck);
 }
+
+$('#deal').click(function(){
+  var blackjack = new Blackjack();
+  blackjack.firstDeal();
+})
