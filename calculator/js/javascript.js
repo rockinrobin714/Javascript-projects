@@ -5,7 +5,7 @@ var total = null;
 $('.num').click(function(){
 	currentString += $(this).html().replace(/^\s+|\s+$|\s+(?=\s)/g, "");
 	//check to make sure first digit isn't 0
-	while (currentString[0]==='0' && currentString.length>1){
+	while (currentString[0]==='0' && currentString.length>1 && currentString[1]!== '.'){
 		currentString=currentString.substr(1);
 	}
 	//only show the last 11 numbers on the screen
@@ -42,6 +42,17 @@ $('#erase-all').click(function(){
 	$('#past-equation').html('0');
 })
 
+$('.decimal').click(function(){
+	// if decimal is clicked first, make it 0.
+	if (currentString === ''){
+		currentString = '0.'
+	}
+	var arr = currentString.split(" ");
+	if (arr[arr.length-1].indexOf('.')===-1){
+		currentString+= '.';
+	}
+	$('#current-equation').html(currentString.slice(-11));
+})
 $('#equals').click(function(){
 	//computer can not evaluate x and ÷, change them for the calculation
 	currentString = currentString.replace("x", "*");
