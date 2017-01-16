@@ -1,6 +1,6 @@
-var blackjack = function(){
-	this.cardValues = {
-  	A:[1,11],
+var Blackjack = function(){
+  this.cardValues = {
+    A:[1,11],
     2: 2,
     3:3,
     4:4,
@@ -15,16 +15,42 @@ var blackjack = function(){
     K: 10
     }
 
+  this.deck = this.createDeck();
+  this.hand = this.dealTwo();
+}
+Blackjack.prototype.createDeck = function(){
+  var deck = []
+  for (var key in this.cardValues){
+    for (let i = 0;i<4;i++){
+    //not worrying about suits, just pushing into a deck
+    deck.push(key)
+    }
   }
-  this.deck = [];
-  this.hand = [];
+  return deck;
 }
-blackjack.prototype.reveal = funciton(){
-
+Blackjack.prototype.reveal = function(){
+  let total = 0;
+  for (var i = 0;i<this.hand.length;i++){
+    if (this.hand[i]!=='A'){
+    //count total
+    } else {
+    //make a total with A = 1 and another total with A = 11
+    }
+  }
 }
-blackjack.prototype.hit = function() {	this.hand.push(this.deck[Math.round(this.deck.length*Math.random)]
+Blackjack.prototype.hit = function() {  
+  this.hand.push(this.deck[Math.round(this.deck.length*Math.random)])
 }
 
-blackjack.prototype.stay = function(){
-
+Blackjack.prototype.stay = function(){
+  //do nothing
+}
+Blackjack.prototype.shuffleDeck = function(){
+  //shuffle deck randomly
+}
+Blackjack.prototype.dealTwo = function(){
+  var hand = []
+  hand.push(this.hit());
+  hand.push(this.hit());
+  return hand;
 }
