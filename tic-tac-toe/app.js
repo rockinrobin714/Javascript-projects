@@ -13,6 +13,7 @@ function ask(question, callback) {
 var board = 
 	' |1|2|3|\n_________\n |4|5|6|\n_________\n |7|8|9|'
 
+
 var turn = {current: null, letter: null}
 var winner = null;
 var newTurn = function(){
@@ -42,9 +43,31 @@ var choose = function(){
 		playGame();
 	})
 }
-var play = function(){
-	
+var checkForWins = function(){
+	var win = false;
+	var newBoard = board.replace(/[^a-z0-9]/gi,'');
+	//check horizontal
+	if (newBoard.substr(0,3)==='XXX'){
+		win = 'X'
+	} else if (newBoard.substr(0,3)==='OOO'){
+		win = 'O'
+	} else if (newBoard.subStr(3,6)==='OOO'){
+		win = 'O'
+	} else if (newBoard.substr(3,6)==='XXX'){
+		win = 'X'
+	} else if (newBoard.substr(6)==='XXX'){
+		win = 'X'
+	} else if (newBoard.substr(6)==='OOO'){
+		win = 'O'
+	}
+	if (win){
+		console.log(`${win} is the winner!!!!`)
+	} else {
+		newTurn();
+		playGame();
+	}
 }
+
 var playGame = function(){
 	ask(`${board}\n ${turn.current}, make your move. Type a number 1 - 9.`, function(answer){
 		if (parseInt(answer)!=answer)	{
@@ -56,8 +79,7 @@ var playGame = function(){
 		} else {
 			var index = board.indexOf(answer);
 			board = board.substr(0, index) + turn.letter + board.substr(index + 1);
-			newTurn();
-			playGame();
+			checkForWins();
 		}
 	})
 }
