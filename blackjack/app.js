@@ -41,16 +41,29 @@ Blackjack.prototype.reveal = function(){
   }
 }
 Blackjack.prototype.dealOneToPlayer = function() {  
-  this.playerHand.push(this.deck.shift())
+  var card = this.deck.shift();
+  this.playerHand.push(card);
+  $('.player').append(`<div class='card suit${card.suit}'><p>${card.number}</p></div>`);
 }
 
 Blackjack.prototype.dealOneToDealer = function() {  
-  this.dealerHand.push(this.deck.shift())
+  var card = this.deck.shift();
+  this.dealerHand.push(card);
+  if (this.dealerHand.length===1){
+    $('.dealer').append("<div class='card cardback'></div>");
+  } else {
+    $('.dealer').append(`<div class='card suit${card.suit}'><p>${card.number}</p></div>`);
+  }
+}
+
+Blackjack.prototype.revealDealersCards = function() {  
+  
 }
 
 Blackjack.prototype.stay = function(){
   //do nothing
 }
+
 Blackjack.prototype.shuffleDeck = function(deck){
   let deckCopy = deck.slice();
   let currentIndex = deckCopy.length-1;
@@ -65,12 +78,10 @@ Blackjack.prototype.shuffleDeck = function(deck){
 }
 
 Blackjack.prototype.firstDeal = function(){
-  this.dealOneToPlayer();
-  this.dealOneToDealer();
-  this.dealOneToPlayer();
-  this.dealOneToDealer();
-  console.log(this.playerHand);
-  console.log(this.deck);
+  setTimeout(this.dealOneToPlayer.bind(this),500);
+  setTimeout(this.dealOneToDealer.bind(this),1000);
+  setTimeout(this.dealOneToPlayer.bind(this),1500);
+  setTimeout(this.dealOneToDealer.bind(this),2000);
 }
 
 $('#deal').click(function(){
