@@ -1,6 +1,7 @@
 var Blackjack = function(){
   this.cardValues = {
-    A:[1,11],
+    //A:[1,11],
+    A: 11,
     2: 2,
     3:3,
     4:4,
@@ -30,16 +31,6 @@ Blackjack.prototype.createDeck = function(){
   return deck;
 }
 
-Blackjack.prototype.reveal = function(){
-  let total = 0;
-  for (var i = 0;i<this.hand.length;i++){
-    if (this.hand[i]!=='A'){
-    //count total
-    } else {
-    //make a total with A = 1 and another total with A = 11
-    }
-  }
-}
 Blackjack.prototype.dealOneToPlayer = function() {  
   var card = this.deck.shift();
   this.playerHand.push(card);
@@ -56,12 +47,33 @@ Blackjack.prototype.dealOneToDealer = function() {
   }
 }
 
-Blackjack.prototype.revealDealersCards = function() {  
-  
+Blackjack.prototype.calculatePlayer = function() {  
+  var total = 0;
+  for (var i = 0; i< this.playerHand.length;i++){
+    total += this.cardValues[this.playerHand[i].number]
+  }
+  if (total>21){
+    $('#win-lose').show();
+    $('#win-lose').html('Sorry, you lose! Try again!');
+    $('#hit').hide();
+    $('#stay').hide();
+    $('#deal').show();
+
+  } else{
+    $('#player-score').html(total);
+  }  
+}
+
+Blackjack.prototype.calculateDealerBefore = function() {  
+  var total = 0;
+  for (var i = 1; i< this.dealerHand.length;i++){
+    total += this.cardValues[this.dealerHand[i].number]
+  }
+  $('#dealer-score').html(total)
 }
 
 Blackjack.prototype.stay = function(){
-  //do nothing
+  this.calculateDealerAfter();
 }
 
 Blackjack.prototype.shuffleDeck = function(deck){
@@ -79,12 +91,32 @@ Blackjack.prototype.shuffleDeck = function(deck){
 
 Blackjack.prototype.firstDeal = function(){
   setTimeout(this.dealOneToPlayer.bind(this),500);
+  setTimeout(this.calculatePlayer.bind(this),500);
   setTimeout(this.dealOneToDealer.bind(this),1000);
   setTimeout(this.dealOneToPlayer.bind(this),1500);
+  setTimeout(this.calculatePlayer.bind(this),1500);
   setTimeout(this.dealOneToDealer.bind(this),2000);
+  setTimeout(this.calculatePlayer.bind(this),1500);
+  setTimeout(this.calculateDealerBefore.bind(this),2000);
 }
 
 $('#deal').click(function(){
   var blackjack = new Blackjack();
+  $('.player').html('');
+  $('.dealer').html('');
   blackjack.firstDeal();
+  $('#win-lose').hide();
+  $('#hit').show();
+  $('#stay').show();
+  $('#deal').hide();
+
+  $('#hit').click(function(){
+    blackjack.dealOneToPlayer();
+    blackjack.calculatePlayer();
+  })
+
+  $('#stay').click(function(){
+    blackjack.calculatePlayer();
+  })
+
 })
