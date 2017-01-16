@@ -30,6 +30,11 @@ $('#erase-one').click(function(){
 })
 
 $('.operator').click(function(){
+	//cut off decimals if they don't have anything after them
+	if (currentString[currentString.length-1]==="."){
+		console.log('yo')
+		currentString=currentString.substr(0,currentString.length-1);
+	}
 	currentString += ' ' + $(this).html().replace(/^\s+|\s+$|\s+(?=\s)/g, "")+ ' ';
 	//only show the last 11 numbers on the screen
   $('#current-equation').html(currentString.slice(-11));
@@ -54,6 +59,10 @@ $('.decimal').click(function(){
 	$('#current-equation').html(currentString.slice(-11));
 })
 $('#equals').click(function(){
+	//cut off decimals if they don't have anything after them
+	if (currentString[currentString.length-1]==="."){
+		currentString=currentString.substr(0,currentString.length-1);
+	}
 	//computer can not evaluate x and ÷, change them for the calculation
 	currentString = currentString.replace("x", "*");
 	currentString = currentString.replace("÷", "/");
