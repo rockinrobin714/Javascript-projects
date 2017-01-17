@@ -58,7 +58,6 @@ var choose = function(){
 }
 var checkForWins = function(){
 	var win = false;
-	
 	//check horizontal
 	if (count>4){
 		for (var i = 0;i<winCombos.length;i++){
@@ -70,6 +69,8 @@ var checkForWins = function(){
 	} 
 	if (win){
 		console.log("The winner is ", win,'!!!!')
+	} else if (count===9){
+		console.log('No one won! :( womp womp');
 	} else {
 	newTurn();
 	playGame();
