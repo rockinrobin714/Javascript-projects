@@ -9,25 +9,36 @@ function ask(question, callback) {
     callback(answer);
   });
 }
-var places= {1:1,
-2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9}
-var board = 
-	` |${places[1]}|${places[2]}|${places[3]}|\n_________\n| ${places[4]}|${places[5]}|${places[6]}|\n_________\n |${places[7]}|${places[8]}|${places[9]}|`
+var places= ['','1','2','3','4','5','6','7','8','9']
 
 var count = 0;
 
+function printBoard() {
+    console.log('\n' +
+        ' ' + places[1] + ' | ' + places[2] + ' | ' + places[3] + '\n' +
+        ' ---------\n' +
+        ' ' + places[4] + ' | ' + places[5] + ' | ' + places[6] + '\n' +
+        ' ---------\n' +
+        ' ' + places[7] + ' | ' + places[8] + ' | ' + places[9] + '\n');
+}
+
+var winCombos = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
+  [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]];
+
 var turn = {current: null, letter: null}
 var winner = null;
+
+
 var newTurn = function(){
 	if (turn.current === 'Player 1'){
 		turn.current = 'Player 2'
 	} else {
 		turn.current = 'Player 1'
 	}
-	if (turn.letter === "X"){
-		turn.letter = "O";
+	if (turn.letter === "x"){
+		turn.letter = "o";
 	} else{
-		turn.letter = "X";
+		turn.letter = "x";
 	}
 }	
 var choose = function(){
@@ -50,7 +61,15 @@ var checkForWins = function(){
 	
 	//check horizontal
 	if (count>4){
-		var newBoard = board.replace(/[^a-z0-9]/gi,'');
+		for (var i = 0;i<winCombos.length;i++){
+			if (places[winCombos[i][0]] === places[winCombos[i][1]] &&
+				places[winCombos[i][0]] === places[winCombos[i][2]]) {
+				win = places[winCombos[i][0]];
+			}
+		} 
+	} 
+	if (win){
+		console.log("The winner is ", win,'!!!!')
 	} else {
 	newTurn();
 	playGame();
@@ -58,16 +77,16 @@ var checkForWins = function(){
 }
 
 var playGame = function(){
-	ask(`${board}\n ${turn.current}, make your move. Type a number 1 - 9.`, function(answer){
-		if (parseInt(answer)!=answer)	{
-			console.log("\nThat was not a number. Try again.")
-			playGame();
-		} else if (!board.includes(answer)){
+	printBoard();
+	ask(`${turn.current}, make your move. Type a number 1 - 9.`, function(answer){
+		if (!places.includes(answer.toString())){
 			console.log("\nUh... that isn't a valid move. Try again.")
 			playGame();
 		} else {
 			places[answer]=turn.letter;
 			console.log('places answer is', places[answer])
+			printBoard();
+			count++
 			checkForWins();
 		}
 	})
