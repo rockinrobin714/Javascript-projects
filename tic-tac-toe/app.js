@@ -9,10 +9,12 @@ function ask(question, callback) {
     callback(answer);
   });
 }
-
+var places= {1:1,
+2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9}
 var board = 
-	' |1|2|3|\n_________\n |4|5|6|\n_________\n |7|8|9|'
+	` |${places[1]}|${places[2]}|${places[3]}|\n_________\n| ${places[4]}|${places[5]}|${places[6]}|\n_________\n |${places[7]}|${places[8]}|${places[9]}|`
 
+var count = 0;
 
 var turn = {current: null, letter: null}
 var winner = null;
@@ -32,39 +34,26 @@ var choose = function(){
 	ask(`${turn.current}, do you want 'X' or 'O'?`,function(answer){
 		if (answer === 'X' || answer === 'x'){
 			console.log("You are X!")
-			turn.letter = 'X';
+			turn.letter = 'x';
 		} else if (answer ==='O' || answer === 'o'){
 			console.log("You are O!")
-			turn.letter = 'O';
+			turn.letter = 'o';
 		} else {
 			console.log("Not sure what you were typing there. I will just make you X.")
-			turn.letter = 'X';
+			turn.letter = 'x';
 		}
 		playGame();
 	})
 }
 var checkForWins = function(){
 	var win = false;
-	var newBoard = board.replace(/[^a-z0-9]/gi,'');
+	
 	//check horizontal
-	if (newBoard.substr(0,3)==='XXX'){
-		win = 'X'
-	} else if (newBoard.substr(0,3)==='OOO'){
-		win = 'O'
-	} else if (newBoard.subStr(3,6)==='OOO'){
-		win = 'O'
-	} else if (newBoard.substr(3,6)==='XXX'){
-		win = 'X'
-	} else if (newBoard.substr(6)==='XXX'){
-		win = 'X'
-	} else if (newBoard.substr(6)==='OOO'){
-		win = 'O'
-	}
-	if (win){
-		console.log(`${win} is the winner!!!!`)
+	if (count>4){
+		var newBoard = board.replace(/[^a-z0-9]/gi,'');
 	} else {
-		newTurn();
-		playGame();
+	newTurn();
+	playGame();
 	}
 }
 
@@ -77,8 +66,8 @@ var playGame = function(){
 			console.log("\nUh... that isn't a valid move. Try again.")
 			playGame();
 		} else {
-			var index = board.indexOf(answer);
-			board = board.substr(0, index) + turn.letter + board.substr(index + 1);
+			places[answer]=turn.letter;
+			console.log('places answer is', places[answer])
 			checkForWins();
 		}
 	})
