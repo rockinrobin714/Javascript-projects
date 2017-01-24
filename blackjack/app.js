@@ -15,7 +15,7 @@ var Blackjack = function(){
     Q: 10,
     K: 10
     }
-
+  this.totalMoney = 100;
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
   this.dealerHand = [];
@@ -84,11 +84,24 @@ Blackjack.prototype.stay = function(){
     $('.dealer').append(`<div class='card suit${this.dealerHand[i].suit}'><p>${this.dealerHand[i].number}</p></div>`);
   }
   this.calculateDealerAfter();
-  var total = $('#dealer-score').html();
-  while (total<17){
+  var dealerTotal = $('#dealer-score').html();
+  while (dealerTotal<17){
     this.dealOneToDealer();
     this.calculateDealerAfter();
-    total = $('#dealer-score').html();
+    dealerTotal = $('#dealer-score').html();
+  }
+  playerTotal = $('#player-score').html();
+  console.log("player total is", playerTotal, "dealer total is", dealerTotal)
+  if (dealerTotal>21){
+    $('#dealer-score').html(dealerTotal + " BUST!!!");
+    this.state="win";
+    this.endGame();
+  } else if (dealerTotal>playerTotal){
+    this.state = "lose";
+    this.endGame()
+  } else {
+    this.state = "win";
+    this.endGame();
   }
 }
 
@@ -109,6 +122,8 @@ Blackjack.prototype.endGame = function(){
   $('#win-lose').show();
   if (this.state==="lose"){
     $('#win-lose').html('Sorry, you lose! Try again!');
+  } else {
+    $('#win-lose').html('You won!!');
   }
   $('#hit').hide();
   $('#stay').hide();
@@ -119,6 +134,8 @@ Blackjack.prototype.endGame = function(){
 }
 
 Blackjack.prototype.firstDeal = function(){
+  $('#dealer-score').html('?');
+  $('#player-score').html('?');
   setTimeout(this.dealOneToPlayer.bind(this),500);
   setTimeout(this.calculatePlayer.bind(this),500);
   setTimeout(this.dealOneToDealer.bind(this),1000);
