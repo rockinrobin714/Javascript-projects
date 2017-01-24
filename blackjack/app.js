@@ -53,12 +53,7 @@ Blackjack.prototype.calculatePlayer = function() {
     total += this.cardValues[this.playerHand[i].number]
   }
   if (total>21){
-    $('#win-lose').show();
-    $('#win-lose').html('Sorry, you lose! Try again!');
-    $('#hit').hide();
-    $('#stay').hide();
-    $('#deal').show();
-
+    this.endGame();
   } else{
     $('#player-score').html(total);
   }  
@@ -89,6 +84,17 @@ Blackjack.prototype.shuffleDeck = function(deck){
  return deckCopy;
 }
 
+Blackjack.prototype.endGame = function(){
+  $('#win-lose').show();
+  $('#win-lose').html('Sorry, you lose! Try again!');
+  $('#hit').hide();
+  $('#stay').hide();
+  $('#deal').show();
+  this.deck = this.shuffleDeck(this.createDeck());
+  this.playerHand = [];
+  this.dealerHand = [];
+}
+
 Blackjack.prototype.firstDeal = function(){
   setTimeout(this.dealOneToPlayer.bind(this),500);
   setTimeout(this.calculatePlayer.bind(this),500);
@@ -99,9 +105,9 @@ Blackjack.prototype.firstDeal = function(){
   setTimeout(this.calculatePlayer.bind(this),1500);
   setTimeout(this.calculateDealerBefore.bind(this),2000);
 }
+var blackjack = new Blackjack();
 
 $('#deal').click(function(){
-  var blackjack = new Blackjack();
   $('.player').html('');
   $('.dealer').html('');
   blackjack.firstDeal();
@@ -110,7 +116,8 @@ $('#deal').click(function(){
   $('#stay').show();
   $('#deal').hide();
 
-  $('#hit').click(function(){
+  })
+$('#hit').click(function(){
     blackjack.dealOneToPlayer();
     blackjack.calculatePlayer();
   })
@@ -119,4 +126,3 @@ $('#deal').click(function(){
     blackjack.calculatePlayer();
   })
 
-})
