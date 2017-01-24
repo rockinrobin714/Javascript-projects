@@ -122,11 +122,13 @@ Blackjack.prototype.shuffleDeck = function(deck){
 Blackjack.prototype.endGame = function(){
   $('#win-lose').show();
   if (this.state==="lose"){
-    $('#win-lose').html('Sorry, you lose! Try again!');
-
+    $('#win-lose').html(`Sorry, you lost ${blackjack.bet}! Try again! `);
   } else {
-    $('#win-lose').html('You won!!');
+    $('#win-lose').html(`You won ${blackjack.bet}!!  `);
+    this.totalMoney += this.bet*2;
+    $('#total-money').html('Current amount of money: '+this.totalMoney);
   }
+  $('#bet').html("<div id='bet'>Insert bet<input/></div>");
   $('#hit').hide();
   $('#stay').hide();
   $('#deal').show();
@@ -157,7 +159,7 @@ $('#deal').click(function(){
   blackjack.bet = parseInt($('input').val())
   if(blackjack.bet>0 && blackjack.bet<=blackjack.totalMoney){
     blackjack.subtractBet();
-    $('#bet').html('Current bet: ' + this.bet)
+    $('#bet').html('Current bet: ' + blackjack.bet)
     $('.player').html('');
     $('.dealer').html('');
     blackjack.firstDeal();
