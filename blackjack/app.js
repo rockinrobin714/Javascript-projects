@@ -16,6 +16,7 @@ var Blackjack = function(){
     K: 10
     }
   this.totalMoney = 100;
+  this.bet = 0;
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
   this.dealerHand = [];
@@ -122,6 +123,7 @@ Blackjack.prototype.endGame = function(){
   $('#win-lose').show();
   if (this.state==="lose"){
     $('#win-lose').html('Sorry, you lose! Try again!');
+
   } else {
     $('#win-lose').html('You won!!');
   }
@@ -131,6 +133,10 @@ Blackjack.prototype.endGame = function(){
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
   this.dealerHand = [];
+}
+Blackjack.prototype.subtractBet = function(){
+  this.totalMoney = this.totalMoney - this.bet;
+  $('#total-money').html('Current amount of money: '+this.totalMoney);
 }
 
 Blackjack.prototype.firstDeal = function(){
@@ -148,15 +154,22 @@ Blackjack.prototype.firstDeal = function(){
 var blackjack = new Blackjack();
 
 $('#deal').click(function(){
-  $('.player').html('');
-  $('.dealer').html('');
-  blackjack.firstDeal();
-  $('#win-lose').hide();
-  $('#hit').show();
-  $('#stay').show();
-  $('#deal').hide();
+  blackjack.bet = parseInt($('input').val())
+  if(blackjack.bet>0 && blackjack.bet<=blackjack.totalMoney){
+    blackjack.subtractBet();
+    $('#bet').html('Current bet: ' + this.bet)
+    $('.player').html('');
+    $('.dealer').html('');
+    blackjack.firstDeal();
+    $('#win-lose').hide();
+    $('#hit').show();
+    $('#stay').show();
+    $('#deal').hide();
+  } else {
+     alert('Please insert a valid bet');
+  }
+})
 
-  })
 $('#hit').click(function(){
     blackjack.dealOneToPlayer();
     blackjack.calculatePlayer();

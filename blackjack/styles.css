@@ -6,7 +6,11 @@ body {
 #title {
 	text-align: center;
 }
-
+input {
+  margin-right:5px;
+  margin-left:5px;
+  width: 40px;
+}
 .centered-row {
 	display: -webkit-flex;
    display: flex;
@@ -106,7 +110,8 @@ button {
 	padding: 5px;
 	font-size: 18px;
 	border-radius: 20%;
-	margin-right: 20px;
+	margin-right: 10px;
+  margin-left: 10px;
 }
 #hit {
 	display: none;
