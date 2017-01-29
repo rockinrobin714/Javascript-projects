@@ -70,8 +70,8 @@ div[class*='suit']:after {
   position: relative;
   float: left;
   margin-right: 10px;
-  width: 150px;
-  height: 220px;
+  width: 120px;
+  height: 180px;
   border-radius: 10px;
   background: #fff;
   -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
@@ -80,7 +80,8 @@ div[class*='suit']:after {
 
 .card p {
   text-align: center;
-  font: 100px/220px Georgia, Times New Roman, serif;
+  margin-top: 25px;
+  font: 100px Helvetica, serif;
 }
 
 .suitdiamonds:before, .suitdiamonds:after {
