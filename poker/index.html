@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Blackjack</title>
+		<link href="styles.css" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	</head>
+	<body>
+	<div class='container'>
+	<div>
+		<h1 id='title'>Blackjack</h1>
+		<div class='centered-row'>
+			<div id='bet'>Insert bet<input/></div>
+			<button id='deal'> Deal! </button>
+			<div id='win-lose'></div>
+			<button id='hit'> Hit! </button>
+			<button id='stay'> Stay! </button>
+			<div id='total-money'>Current amount of money: 100</div>
+		</div>
+	</div>
+		<div class='row'> The dealer's current total is... <span id='dealer-score'>?</span></div>
+		<div class="dealer hand">
+		</div>
+
+		<div class='row'>Your current total is... <span id='player-score'>?</span></div>
+		<div class='player hand'>
+		</div>
+	</div>
+		<script type="text/javascript" src="app.js"></script>
+	</body>
+</html>
