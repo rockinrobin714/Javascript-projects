@@ -1,5 +1,3 @@
-This is a project to copy the popular casino game Blackjack.
+This is a project to copy poker.
 
-The deployed version of this project can be found here: https://robinsblackjack.herokuapp.com/index.html
-
-The rules to Blackjack can be found here: https://en.wikipedia.org/wiki/Blackjack
+The rules to Poker can be found here: https://en.wikipedia.org/wiki/Poker
