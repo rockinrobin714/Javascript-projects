@@ -3,14 +3,7 @@
 body {
   background: #00a651;
 }
-#title {
-	text-align: center;
-}
-input {
-  margin-right:5px;
-  margin-left:5px;
-  width: 40px;
-}
+
 .centered-row {
 	display: -webkit-flex;
    display: flex;
@@ -106,6 +99,7 @@ div[class*='suit']:after {
 .cardback {
 	background-image: url('./cardback.png');
 	background-position: center;
+  background-size: 120px 180px;
 }
 button {
 	padding: 5px;
