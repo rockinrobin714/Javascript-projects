@@ -15,7 +15,8 @@ var Poker = function(){
     Q: 12,
     K: 13
     }
-  
+  this.rankings = ["royalFlush","straightFlush"]
+
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
 
@@ -48,4 +49,3 @@ Poker.prototype.shuffleDeck = function(deck){
 
 
 var poker = new Poker();
-
