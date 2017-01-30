@@ -2,6 +2,7 @@
 
 body {
   background: #00a651;
+  font: Helvetica, serif;
 }
 
 .centered-row {
@@ -101,16 +102,27 @@ div[class*='suit']:after {
 	background-position: center;
   background-size: 120px 180px;
 }
-button {
-	padding: 5px;
-	font-size: 18px;
-	border-radius: 20%;
-	margin-right: 10px;
-  margin-left: 10px;
+table {
+    border-collapse: collapse;
 }
-#hit {
-	display: none;
+table, th, td {
+    border: 1px solid black;
 }
-#stay {
-	display: none;
+td {
+  width: 50px;
+  text-align: center;
+}
+.title {
+  width:200px;
+}
+.button {
+  height: 100px;
+  width: 110px;
+  border: 3px solid black;
+  border-radius:10px;
+  margin:10px;
+  text-align: center;
+  padding-top:20px;
+  background-color: white;
+  font-size: 18px;
 }
