@@ -13,18 +13,24 @@
 				<table id="table">
 				</table>
 				<div class='bet-box'>
-				<br>
-				TOTAL:
+				BET:
 				<br>
 				<span id='bet'>
 				50
 				</span>
+				<br>
+				<br>
+				CREDITS:
+				<br>
+				<span id='credits'>
+				500
+				</span>
 				</div>
 			</div>
 			<div class="hand centered-row">
-				<div class='card suithearts'><p>5</p></div>
-				<div class='card suitclubs'><p>8</p></div>
-				<div class='card suithearts'><p>A</p><p id='hold'>HOLD</p></div> 
+				<div class='card suithearts unheld'><p>5</p><p id='hold' class='hidden'>HOLD</p></div>
+				<div class='card suitclubs'><p>8</p><p id='hold' class='hidden'>HOLD</p></div>
+				<div class='card suithearts'><p>A</p><p id='hold' class='hidden'>HOLD</p></div> 
 				<div class='card cardback'></div>
 				<div class='card cardback'></div>
 			</div>

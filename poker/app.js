@@ -69,3 +69,14 @@ for (var i=0;i<betsAndRankings.length;i++){
     </tr>`)
 }
 var poker = new Poker();
+
+$('.card').click(function(){
+  $(this).toggleClass('held');
+  $(this).toggleClass('hidden');
+  $(this).toggleClass('unheld')
+  if($(this).hasClass('held')){
+    $(this).append("<p id='hold'>HOLD</p>")
+  } else {
+    $(this).append("<p id='hold'>HOLD</p>")
+  }
+})
