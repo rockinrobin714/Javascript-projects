@@ -17,10 +17,10 @@ var Poker = function(){
     }
     
   this.rankings = ["royalFlush","straightFlush"]
-
+  this.bet = 0;
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
-
+  this.credits = 100;
 
 }
 Poker.prototype.createDeck = function(){
@@ -80,5 +80,25 @@ $('.card').click(function(){
   } else {
    $(':nth-child(2)', this).text('');
    //do stuff
+  }
+})
+function updateBetAndCredits(){
+  $('#bet').text(poker.bet)
+  $('#credits').text(poker.credits)
+}
+
+$('.bet-one').click(function(){
+  if(poker.bet<5){
+    poker.bet ++;
+    poker.credits --;
+    updateBetAndCredits()
+  }
+})
+$('.bet-max').click(function(){
+  if(poker.bet!=5){
+    let difference = 5 - poker.bet
+    poker.bet = 5;
+    poker.credits -= difference;
+    updateBetAndCredits()
   }
 })
