@@ -15,11 +15,11 @@ var Poker = function(){
     Q: 12,
     K: 13
     }
-    
+  this.currentTurn = 'first' 
   this.rankings = ["royalFlush","straightFlush"]
   this.bet = 0;
   this.deck = this.shuffleDeck(this.createDeck());
-  this.playerHand = [];
+  this.hand = [];
   this.credits = 100;
 
 }
@@ -82,23 +82,47 @@ $('.card').click(function(){
    //do stuff
   }
 })
+
 function updateBetAndCredits(){
   $('#bet').text(poker.bet)
   $('#credits').text(poker.credits)
 }
 
 $('.bet-one').click(function(){
-  if(poker.bet<5){
+  if(poker.bet<5 && poker.currentTurn==='first'){
     poker.bet ++;
     poker.credits --;
     updateBetAndCredits()
   }
 })
 $('.bet-max').click(function(){
-  if(poker.bet!=5){
+  if(poker.bet!=5 && poker.currentTurn==='first'){
     let difference = 5 - poker.bet
     poker.bet = 5;
     poker.credits -= difference;
     updateBetAndCredits()
   }
 })
+$('.deal').click(function(){
+  if(poker.bet === 0){
+    alert("Please make a bet higher than 0")
+  } else if (poker.currentTurn = 'first'){
+    for (var i =0;i<5;i++){
+      poker.hand.push(poker.deck.shift())
+    }
+
+    let index = 0;
+    revealCard = function(){
+      if (index<5){
+        $(`div.hand div:nth-child(${index+1})`).toggleClass('cardback')
+        $(`div.hand div:nth-child(${index+1})`).html(`
+        <div class='suit${poker.hand[index].suit}'>
+        <p>${poker.hand[index].number}</p><p></p></div>`)
+        index++
+      }
+      setTimeout(revealCard,500)
+    }
+    setTimeout(revealCard,500)
+  }
+})
+//<div class='card suithearts unheld'><p>5</p><p></p></div>
