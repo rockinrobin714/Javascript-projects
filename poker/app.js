@@ -72,11 +72,13 @@ var poker = new Poker();
 
 $('.card').click(function(){
   $(this).toggleClass('held');
-  $(this).toggleClass('hidden');
-  $(this).toggleClass('unheld')
+  $(this).toggleClass('unheld');
+  $(':nth-child(2)', this).toggleClass('hold');
   if($(this).hasClass('held')){
-    $(this).append("<p id='hold'>HOLD</p>")
+     $(':nth-child(2)', this).text('Hold');
+     //do stuff
   } else {
-    $(this).append("<p id='hold'>HOLD</p>")
+   $(':nth-child(2)', this).text('');
+   //do stuff
   }
 })

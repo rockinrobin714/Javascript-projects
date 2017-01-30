@@ -180,16 +180,13 @@ td {
   position:relative;
   top:1px;
 }
-#hold {
+.hold {
   background: yellow;
   padding:5px;
-  font-size:16px;
+  font-size:16px !important;
   font-weight: bold;
   position:absolute;
   width: 104px;
   top: 0px;
   border: 3px solid black;
-}
-.hidden {
-  display:none;
 }
