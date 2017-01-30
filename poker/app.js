@@ -21,6 +21,7 @@ var Poker = function(){
   this.deck = this.shuffleDeck(this.createDeck());
   this.hand = [];
   this.credits = 100;
+  this.held = [];
 
 }
 Poker.prototype.createDeck = function(){
@@ -76,10 +77,15 @@ $('.card').click(function(){
   $(':nth-child(2)', this).toggleClass('hold');
   if($(this).hasClass('held')){
      $(':nth-child(2)', this).text('Hold');
+     var index = $(this).attr("id")
+     poker.held.push(index)
+     console.log(poker.held)
      //do stuff
   } else {
    $(':nth-child(2)', this).text('');
-   //do stuff
+   var index = $(this).attr("id");
+   var heldIndex = poker.held.indexOf(index)
+   poker.held.splice(heldIndex,1)
   }
 })
 
@@ -106,23 +112,28 @@ $('.bet-max').click(function(){
 $('.deal').click(function(){
   if(poker.bet === 0){
     alert("Please make a bet higher than 0")
-  } else if (poker.currentTurn = 'first'){
+    //deal first time
+  } else if (poker.currentTurn === 'first'){
     for (var i =0;i<5;i++){
       poker.hand.push(poker.deck.shift())
     }
-
+    poker.currentTurn = 'second'
     let index = 0;
     revealCard = function(){
       if (index<5){
-        $(`div.hand div:nth-child(${index+1})`).toggleClass('cardback')
+        $(`div.hand div:nth-child(${index+1})`).toggleClass('cardback');
+        $(`div.hand div:nth-child(${index+1})`).toggleClass('cardfront');
         $(`div.hand div:nth-child(${index+1})`).html(`
-        <div class='suit${poker.hand[index].suit}'>
+        <div class='held suit${poker.hand[index].suit}'>
         <p>${poker.hand[index].number}</p><p></p></div>`)
         index++
+        setTimeout(revealCard,500)
       }
-      setTimeout(revealCard,500)
     }
     setTimeout(revealCard,500)
+    //deal second time
+  } else {
+    console.log('second')
   }
 })
 //<div class='card suithearts unheld'><p>5</p><p></p></div>
