@@ -30,7 +30,7 @@ Poker.prototype.createDeck = function(){
     deck.push({number: key, suit: 'hearts'});
     deck.push({number: key, suit: 'diamonds'});
     deck.push({number: key, suit: 'clubs'});
-    deck.push({number: key, suit: 'clubs'});
+    deck.push({number: key, suit: 'spades'});
   }
   return deck;
 }
@@ -79,7 +79,6 @@ $('.card').click(function(){
      $(':nth-child(2)', this).text('Hold');
      var index = $(this).attr("id")
      poker.held.push(index)
-     console.log(poker.held)
      //do stuff
   } else {
    $(':nth-child(2)', this).text('');
@@ -136,4 +135,4 @@ $('.deal').click(function(){
     console.log('second')
   }
 })
-//<div class='card suithearts unheld'><p>5</p><p></p></div>
+

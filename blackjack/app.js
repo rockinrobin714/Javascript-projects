@@ -28,7 +28,7 @@ Blackjack.prototype.createDeck = function(){
     deck.push({number: key, suit: 'hearts'});
     deck.push({number: key, suit: 'diamonds'});
     deck.push({number: key, suit: 'clubs'});
-    deck.push({number: key, suit: 'clubs'});
+    deck.push({number: key, suit: 'spades'});
   }
   return deck;
 }
