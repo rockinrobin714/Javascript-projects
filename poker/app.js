@@ -132,7 +132,16 @@ $('.deal').click(function(){
     setTimeout(revealCard,500)
     //deal second time
   } else {
-    console.log('second')
+    var newHand = [];
+    for (var i=0;i<5;i++){
+      if (!poker.held.includes(i.toString())){
+        
+        $(`div.hand div:nth-child(${i+1})`).toggleClass('cardback');
+        $(`div.hand div:nth-child(${i+1})`).html('');
+        $(`div.hand div:nth-child(${i+1})`).toggleClass('cardfront');
+      }
+    }
+
   }
 })
 
