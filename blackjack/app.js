@@ -20,6 +20,8 @@ var Blackjack = function(){
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
   this.dealerHand = [];
+  this.playerScore = [0];
+  this.dealerScore = [0]
   this.state = "play";
 }
 Blackjack.prototype.createDeck = function(){
@@ -50,65 +52,67 @@ Blackjack.prototype.dealOneToDealer = function() {
 }
 
 Blackjack.prototype.calculatePlayer = function() {  
-  var total = [0];
+  playerScore = [0];
   for (var i = 0; i< this.playerHand.length;i++){
     if (this.playerHand[i].number==="A"){
-      total[1]=total[0]+11;
-      total[0]+=1;
+      this.playerScore[1]=total[0]+11;
+      this.playerScore[0]+=1;
     } else {
-      total[0] += this.cardValues[this.playerHand[i].number];
-      if (total[1]){
-        total[1] += this.cardValues[this.playerHand[i].number];
+      this.playerScore[0] += this.cardValues[this.playerHand[i].number];
+      if (this.playerScore[1]){
+        this.playerScore[1] += this.cardValues[this.playerHand[i].number];
       }
     }
   }
-  if (total[1]>21){
-        total = total.slice(0,1);
+  if (this.playerScore[1]>21){
+        this.playerScore = this.playerScore.slice(0,1);
       }
-  if (total[0]>21){
+  if (this.playerScore[0]>21){
     this.state = "lose";
-    $('#player-score').html(total[0] + " BUST!!");
+    $('#player-score').html(this.playerScore[0] + " BUST!!");
     this.endGame();
   } else{
-    if (total[1]){
-      $('#player-score').html(total[0] + ' or ' + total[1]);
+    if (this.playerScore[1]){
+      $('#player-score').html(this.playerScore[0] + ' or ' + this.playerScore[1]);
     } else {
-      $('#player-score').html(total);
+      $('#player-score').html(this.playerScore);
     }
   }  
 }
 
 Blackjack.prototype.calculateDealerBefore = function() {  
-  if (this.dealerHand[1].number==="A"){
+  console.log(this.dealerHand)
+  if (this.dealerHand[0].number==="A"){
     $('#dealer-score').html('1 or 11')
   } else {
-    $('#dealer-score').html(this.cardValues[this.dealerHand[1].number]);
+    $('#dealer-score').html(this.cardValues[this.dealerHand[0].number]);
   }
 }
 
 Blackjack.prototype.calculateDealerAfter = function() {  
-  var total = [0];
   for (var i = 0; i< this.dealerHand.length;i++){
     if (this.dealerHand[i].number==="A"){
-      total[1]=total[0]+11;
-      total[0]+=1;
+      this.dealerScore[1]=this.dealerScore[0]+11;
+      this.dealerScore[0]+=1;
     } else {
-      total[0] += this.cardValues[this.dealerHand[i].number];
-      if (total[1]){
-        total[1] += this.cardValues[this.dealerHand[i].number];
+      this.dealerScore[0] += this.cardValues[this.dealerHand[i].number];
+      if (this.dealerScore[1]){
+        this.dealerScore[1] += this.cardValues[this.dealerHand[i].number];
       }
     }
   }
-  if (total[1]>21){
-        total = total.slice(0,1);
+  if (this.dealerScore[1]>21){
+        this.dealerScore = this.dealerScore.slice(0,1);
     }
-  if (total[1]){
-    $('#dealer-score').html(total[0] + ' or ' + total[1]);
+  if (this.dealerScore[1]){
+    $('#dealer-score').html(this.dealerScore[0] + ' or ' + this.dealerScore[1]);
   } else {
-    $('#dealer-score').html(total);
+    $('#dealer-score').html(this.dealerScore);
   } 
 }
 
+
+//TODO: fix the scoring for this if Aces
 Blackjack.prototype.stay = function(){
   $('.dealer').html('');
   for (var i = 0; i< this.dealerHand.length;i++){
