@@ -20,8 +20,8 @@ var Blackjack = function(){
   this.deck = this.shuffleDeck(this.createDeck());
   this.playerHand = [];
   this.dealerHand = [];
-  this.playerScore = [0];
-  this.dealerScore = [0]
+  this.playerScore;
+  this.dealerScore;
   this.state = "play";
 }
 Blackjack.prototype.createDeck = function(){
@@ -52,62 +52,64 @@ Blackjack.prototype.dealOneToDealer = function() {
 }
 
 Blackjack.prototype.calculatePlayer = function() {  
-  playerScore = [0];
+  var total = [0];
   for (var i = 0; i< this.playerHand.length;i++){
     if (this.playerHand[i].number==="A"){
-      this.playerScore[1]=total[0]+11;
-      this.playerScore[0]+=1;
+      total[1]=total[0]+11;
+      total[0]+=1;
     } else {
-      this.playerScore[0] += this.cardValues[this.playerHand[i].number];
-      if (this.playerScore[1]){
-        this.playerScore[1] += this.cardValues[this.playerHand[i].number];
+      total[0] += this.cardValues[this.playerHand[i].number];
+      if (total[1]){
+        total[1] += this.cardValues[this.playerHand[i].number];
       }
     }
   }
-  if (this.playerScore[1]>21){
-        this.playerScore = this.playerScore.slice(0,1);
+  if (total[1]>21){
+        total = total.slice(0,1);
       }
-  if (this.playerScore[0]>21){
+  if (total[0]>21){
     this.state = "lose";
-    $('#player-score').html(this.playerScore[0] + " BUST!!");
+    $('#player-score').html(total[0] + " BUST!!");
     this.endGame();
   } else{
-    if (this.playerScore[1]){
-      $('#player-score').html(this.playerScore[0] + ' or ' + this.playerScore[1]);
+    this.playerScore = total;
+    if (total[1]){
+      $('#player-score').html(total[0] + ' or ' + total[1]);
     } else {
-      $('#player-score').html(this.playerScore);
+      $('#player-score').html(total);
     }
   }  
 }
 
 Blackjack.prototype.calculateDealerBefore = function() {  
-  console.log(this.dealerHand)
-  if (this.dealerHand[0].number==="A"){
+  if (this.dealerHand[1].number==="A"){
     $('#dealer-score').html('1 or 11')
   } else {
-    $('#dealer-score').html(this.cardValues[this.dealerHand[0].number]);
+    $('#dealer-score').html(this.cardValues[this.dealerHand[1].number]);
   }
 }
 
 Blackjack.prototype.calculateDealerAfter = function() {  
+  var total = [0];
   for (var i = 0; i< this.dealerHand.length;i++){
     if (this.dealerHand[i].number==="A"){
-      this.dealerScore[1]=this.dealerScore[0]+11;
-      this.dealerScore[0]+=1;
+      total[1]=total[0]+11;
+      total[0]+=1;
     } else {
-      this.dealerScore[0] += this.cardValues[this.dealerHand[i].number];
-      if (this.dealerScore[1]){
-        this.dealerScore[1] += this.cardValues[this.dealerHand[i].number];
+      total[0] += this.cardValues[this.dealerHand[i].number];
+      if (total[1]){
+        total[1] += this.cardValues[this.dealerHand[i].number];
       }
     }
   }
-  if (this.dealerScore[1]>21){
-        this.dealerScore = this.dealerScore.slice(0,1);
+  if (total[1]>21){
+        total = total.slice(0,1);
     }
-  if (this.dealerScore[1]){
-    $('#dealer-score').html(this.dealerScore[0] + ' or ' + this.dealerScore[1]);
+  this.dealerScore = total;
+  if (total[1]){
+    $('#dealer-score').html(total[0] + ' or ' + total[1]);
   } else {
-    $('#dealer-score').html(this.dealerScore);
+    $('#dealer-score').html(total);
   } 
 }
 
@@ -119,25 +121,23 @@ Blackjack.prototype.stay = function(){
     $('.dealer').append(`<div class='card suit${this.dealerHand[i].suit}'><p>${this.dealerHand[i].number}</p></div>`);
   }
   this.calculateDealerAfter();
-  var dealerTotal = $('#dealer-score').html();
-  while (dealerTotal<17){
+  while (this.dealerScore[0]<17){
     this.dealOneToDealer();
     this.calculateDealerAfter();
-    dealerTotal = $('#dealer-score').html();
   }
-  playerTotal = $('#player-score').html();
-  console.log("player total is", playerTotal, "dealer total is", dealerTotal)
-  if (dealerTotal>21){
-    $('#dealer-score').html(dealerTotal + " BUST!!!");
+  this.dealerScore.sort();
+  this.playerScore.sort();
+  if (this.dealerScore[0]>21){
+    $('#dealer-score').html(this.dealerScore + " BUST!!!");
     this.state="win";
-    this.endGame();
-  } else if (dealerTotal>playerTotal){
+  } else if (this.dealerScore[0]>this.playerScore[0]){
     this.state = "lose";
-    this.endGame()
+  } else if (this.dealerScore[0]===this.playerScore[0]){
+    this.state='tie';
   } else {
     this.state = "win";
-    this.endGame();
   }
+  this.endGame()
 }
 
 Blackjack.prototype.shuffleDeck = function(deck){
@@ -157,10 +157,13 @@ Blackjack.prototype.endGame = function(){
   $('#win-lose').show();
   if (this.state==="lose"){
     $('#win-lose').html(`Sorry, you lost ${blackjack.bet}! Try again! `);
-  } else {
+  } else if (this.state==='win'){
     $('#win-lose').html(`You won ${blackjack.bet}!!  `);
     this.totalMoney += this.bet*2;
     $('#total-money').html('Current amount of money: '+this.totalMoney);
+  } else {
+    this.totalMoney += this.bet
+    $('#win-lose').html(`You tied, so we will refund you ${blackjack.bet}.  `);
   }
   $('#bet').html("<div id='bet'>Insert bet<input/></div>");
   $('#hit').hide();
