@@ -50,16 +50,31 @@ Blackjack.prototype.dealOneToDealer = function() {
 }
 
 Blackjack.prototype.calculatePlayer = function() {  
-  var total = 0;
+  var total = [0];
   for (var i = 0; i< this.playerHand.length;i++){
-    total += this.cardValues[this.playerHand[i].number]
+    if (this.playerHand[i].number==="A"){
+      total[1]=total[0]+11;
+      total[0]+=1;
+    } else {
+      total[0] += this.cardValues[this.playerHand[i].number];
+      if (total[1]){
+        total[1] += this.cardValues[this.playerHand[i].number];
+      }
+    }
   }
-  if (total>21){
+  if (total[1]>21){
+        total = total.slice(0,1);
+      }
+  if (total[0]>21){
     this.state = "lose";
-    $('#player-score').html(total + " BUST!!");
+    $('#player-score').html(total[0] + " BUST!!");
     this.endGame();
   } else{
-    $('#player-score').html(total);
+    if (total[1]){
+      $('#player-score').html(total[0] + ' or ' + total[1]);
+    } else {
+      $('#player-score').html(total);
+    }
   }  
 }
 
