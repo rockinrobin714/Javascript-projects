@@ -79,19 +79,34 @@ Blackjack.prototype.calculatePlayer = function() {
 }
 
 Blackjack.prototype.calculateDealerBefore = function() {  
-  var total = 0;
-  for (var i = 1; i< this.dealerHand.length;i++){
-    total += this.cardValues[this.dealerHand[i].number]
+  if (this.dealerHand[1].number==="A"){
+    $('#dealer-score').html('1 or 11')
+  } else {
+    $('#dealer-score').html(this.cardValues[this.dealerHand[1].number]);
   }
-  $('#dealer-score').html(total)
 }
 
 Blackjack.prototype.calculateDealerAfter = function() {  
-  var total = 0;
+  var total = [0];
   for (var i = 0; i< this.dealerHand.length;i++){
-    total += this.cardValues[this.dealerHand[i].number]
+    if (this.dealerHand[i].number==="A"){
+      total[1]=total[0]+11;
+      total[0]+=1;
+    } else {
+      total[0] += this.cardValues[this.dealerHand[i].number];
+      if (total[1]){
+        total[1] += this.cardValues[this.dealerHand[i].number];
+      }
+    }
   }
-  $('#dealer-score').html(total)
+  if (total[1]>21){
+        total = total.slice(0,1);
+    }
+  if (total[1]){
+    $('#dealer-score').html(total[0] + ' or ' + total[1]);
+  } else {
+    $('#dealer-score').html(total);
+  } 
 }
 
 Blackjack.prototype.stay = function(){
