@@ -32,7 +32,6 @@ $('#erase-one').click(function(){
 $('.operator').click(function(){
 	//cut off decimals if they don't have anything after them
 	if (currentString[currentString.length-1]==="."){
-		console.log('yo')
 		currentString=currentString.substr(0,currentString.length-1);
 	}
 	currentString += ' ' + $(this).html().replace(/^\s+|\s+$|\s+(?=\s)/g, "")+ ' ';
