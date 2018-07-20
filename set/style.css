@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  width: 66%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card {
+    height: 120px;
+    width: 160px;
+    margin: 10px 20px;
+    padding: 20px;
+
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.diamond {
+  width: 0;
+  height: 0;
+  border: 25px solid transparent;
+  position: relative;
+  top: -25px;
+}
+
+.diamond.red    { border-bottom: 40px solid red; }
+.diamond.purple { border-bottom: 40px solid purple; }
+.diamond.green  { border-bottom: 40px solid green; }
+
+.diamond:after {
+  content: '';
+  position: absolute;
+  left: -25px; top: 40px;
+  width: 0;
+  height: 0;
+  border: 25px solid transparent;
+}
+
+.diamond.red:after    { border-top: 40px solid red; }
+.diamond.purple:after { border-top: 40px solid purple; }
+.diamond.green:after  { border-top: 40px solid green; }
+
+.pill {
+  height: 75px;
+  width: 35px;
+  border-radius: 20px;
+}
+
+.pill.red    { background: red; }
+.pill.purple { background: purple; }
+.pill.green  { background: green; }
